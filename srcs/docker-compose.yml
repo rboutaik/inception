@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:rachid
+    networks:
+      - my_network
+    build: 
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    env_file: .env
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: on-failure
+    expose:
+      - "3306"
+    secrets:
+      - my_password
+      - my_root_password
+  
+  nginx:
+    container_name: nginx
+    image: nginx:rachid
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - my_network
+    depends_on:
+      - wordpress
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "443:443" 
+    restart: on-failure
+  
+  wordpress:
+    container_name: wordpress
+    image: wordpress:rachid
+    env_file: .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - my_network
+    build: 
+      context: requirements/wordpress
+      dockerfile: Dockerfile
+    depends_on:
+      - mariadb
+    restart: on-failure
+    expose: 
+      - "9000"
+    secrets:
+      - my_password
+      - my_root_password
+
+
+  adminer:
+    container_name: adminer
+    image: adminer:rachid
+    build: ./requirements/bonus/adminer
+    ports:
+      - "7000:8080"
+    depends_on:
+      - mariadb
+    networks:
+      - my_network
+    restart: on-failure
+
+  redis:
+    container_name: redis
+    image: redis:rachid
+    build:  ./requirements/bonus/redis
+    ports:  
+      - "6379:6379"
+    depends_on:
+      - nginx
+    networks:
+      - my_network
+    restart: on-failure
+
+  staticwebsite:
+    build: ./requirements/bonus/staticwebsite
+    container_name: staticwebsite
+    image: staticwebsite:rachid
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network
+    restart: on-failure
+  
+  portainer:
+    build: ./requirements/bonus/portainer
+    image: portainer:rachid
+    container_name: portainer
+    ports:
+      - "9001:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - my_network
+    restart: on-failure
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/rboutaik/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: 'bind'
+      device: '/home/rboutaik/data/mariadb'
+
+networks:
+  my_network:
+    driver: bridge
+
+secrets:
+  my_password:
+    file: ../secrets/my_password.txt
+  my_root_password:
+    file: ../secrets/my_root_password.txt

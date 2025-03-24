@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1337 Coding School</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f172a;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                #6366f1,
+                #8b5cf6,
+                #d946ef,
+                #ec4899
+            );
+            animation: gradient 20s linear infinite;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        @keyframes gradient {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Grid background */
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: grid-move 20s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: rotateX(60deg) translateY(0);
+            }
+            100% {
+                transform: rotateX(60deg) translateY(50px);
+            }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            animation: float-up 10s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .content {
+            text-align: center;
+            max-width: 700px;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 4rem;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 40px rgba(139, 92, 246, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            z-index: 4;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 60px rgba(139, 92, 246, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.07);
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1), transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        h1::after {
+            content: '1337';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            filter: blur(20px);
+            opacity: 0.5;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            color: #a855f7;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .icon:hover {
+            opacity: 1;
+            transform: scale(1.2);
+            color: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="grid"></div>
+    <div class="particles">
+        <!-- Generated by JavaScript -->
+    </div>
+    
+    <div class="content">
+        <h1>1337 Coding School</h1>
+        <p>Transform your future with cutting-edge coding education. Join our community of passionate developers and master the art of programming through hands-on learning and real-world projects.</p>
+        <div class="icons">
+            <i class="icon fas fa-code"></i>
+            <i class="icon fas fa-terminal"></i>
+            <i class="icon fas fa-laptop-code"></i>
+            <i class="icon fas fa-brain"></i>
+        </div>
+    </div>
+</body>
+</html>
